@@ -102,7 +102,7 @@ By signing below, each team member confirms that they have reviewed this contrac
 | ----------- | --------- | ---- |
 |  Wade Phillips| WEP| 9/18/2026|
 |  Bhavya Pant  |  BP  |  9/18/2026    |
-|             |           |      |
+|   Preya Patel    PP      |   9/18/2026         |      |
 |             |           |      |
 |             |           |      |
 |             |           |      |
