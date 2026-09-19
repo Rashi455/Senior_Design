@@ -7,7 +7,7 @@
 |Wade Phillips|philliw3@mail.uc.edu| (513)680-0775             |Text/Email                          |
 |Rashi Loni             |loniri@mail.uc.edu       | (513)773-8655             |  Text/Email                        |
 |  Nailah Sall           |sallnp@mail.uc.edu       | (513)238-1668             |    Text/Email                      |
-|  Collin Barrett           |barretc8@mail.uc.edu       |(513)867-6876              |  Text/Email                        |
+|  Collin Barrett           |barretc8@mail.uc.edu       |(614)867-6876              |  Text/Email                        |
 | Preya Patel            |patel8p9@mail.uc.edu       |(220)282-7891              |  Text/Email                        |
 | Bhavya Pant            |pantba@mail.uc.edu       |(513)693-1960              | Text/Email                         |
 
@@ -103,6 +103,6 @@ By signing below, each team member confirms that they have reviewed this contrac
 |  Wade Phillips| WEP| 9/18/2026|
 |  Bhavya Pant  |  BP  |  9/18/2026    |
 |   Preya Patel     | PP |  9/18/2026         |      
-|             |           |      |
+| Collin Barrett | CB | 9/18/2026 |
 |             |           |      |
 |             |           |      |
