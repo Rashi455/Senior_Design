@@ -104,5 +104,5 @@ By signing below, each team member confirms that they have reviewed this contrac
 |  Bhavya Pant  |  BP  |  9/18/2026    |
 |   Preya Patel     | PP |  9/18/2026         |      
 | Collin Barrett | CB | 9/18/2026 |
-|             |           |      |
+| Nailah Sall |  NS  |  9/18/2026    |
 |             |           |      |
