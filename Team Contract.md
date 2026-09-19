@@ -105,4 +105,4 @@ By signing below, each team member confirms that they have reviewed this contrac
 |   Preya Patel     | PP |  9/18/2026         |      
 | Collin Barrett | CB | 9/18/2026 |
 | Nailah Sall |  NS  |  9/18/2026    |
-|             |           |      |
+|      Rashi Loni       |       RL    |   8/18/2026   |
