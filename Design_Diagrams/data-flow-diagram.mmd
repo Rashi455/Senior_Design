@@ -1,0 +1,58 @@
+---
+title: Financial Literacy App for Young Adults - Data-Flow Diagram
+---
+flowchart TB
+    Info["Goal: help young adults budget, save and manage debt with simple tracking and AI coaching (no investment advice).
+    Input: income/expense entries and money questions. Output: spending summaries, habit trends, coaching guidance, lessons."]
+
+    subgraph Flows[" "]
+    direction LR
+    subgraph A["Flow A: Track spending (US-01, US-03)"]
+        direction TB
+        A1([Young adult]) -->|"raw form input: amount, category, date"| A2[Client App: check form]
+        A2 -->|"I2: transaction JSON"| A3[Backend API: verify token, validate]
+        A3 -->|"I4: validated record"| A4[(Database)]
+        A4 -->|"I4: stored rows for date range"| A5[Backend API: total by category and month]
+        A5 -->|"I2: summary JSON"| A6[Client App: draw chart + text summary]
+        A6 -->|"on-screen chart and screen-reader text"| A7([Young adult])
+    end
+
+    subgraph B["Flow B: Ask the AI coach (US-02, UC-01)"]
+        direction TB
+        B1([Young adult]) -->|"raw question text"| B2[Client App]
+        B2 -->|"I2: coach message JSON"| B3[Backend API: verify token, scope check]
+        B3 -->|"I4: read request"| B4[(Database)]
+        B4 -->|"I4: stored rows: income, top categories"| B5[Backend API: build anonymized prompt]
+        B5 -->|"I5: prompt JSON: rules + anonymized context + chat"| B6[AI Coaching Service]
+        B6 -->|"I5: raw completion text"| B7[Backend API: filter out investment advice]
+        B7 -->|"I4: coaching session row"| B8[(Database)]
+        B7 -->|"I2: coach reply JSON: status, reply, disclaimer"| B9[Client App]
+        B9 -->|"accessible text answer or 'coach unavailable'"| B10([Young adult])
+    end
+
+    subgraph C["Flow C: Publish a lesson (US-04)"]
+        direction TB
+        C1([Content admin]) -->|"draft lesson: Markdown + image alt text"| C2[Admin Content Tool]
+        C2 -->|"I6: article JSON"| C3[Backend API: check admin role, validate]
+        C3 -->|"I4: article row, new version"| C4[(Database)]
+        C4 -->|"I4: stored article rows"| C5[Backend API]
+        C5 -->|"I2: articles JSON"| C6[Client App]
+        C6 -->|"rendered lesson"| C7([Young adult])
+    end
+
+    end
+
+    subgraph Legend
+        direction LR
+        L1([Person]) ~~~ L2[Processing step in a component] ~~~ L3[(Stored data)] ~~~ L4[External system]
+        L5[ ] -->|"data crossing the arrow and its form; In = interface from the Interface Specification table"| L6[ ]
+    end
+
+    T["Timing: the user stories and constraints set no timing budget.
+    Design assumption: the AI call (I5) times out after 20 s, then Flow B returns 'coach unavailable' (UC-01 E1)."]
+
+    A ~~~ B ~~~ C
+    Info ~~~ Flows ~~~ T ~~~ Legend
+
+    classDef external stroke-dasharray: 5 5,stroke-width:2px
+    class B6,L4 external
