@@ -1,0 +1,30 @@
+---
+title: Financial Literacy App for Young Adults - D0 Block Diagram
+---
+flowchart TB
+    Info["Goal: help young adults budget, save and manage debt with simple tracking and AI coaching (no investment advice).
+    Input: income/expense entries and money questions. Output: spending summaries, habit trends, coaching guidance, lessons."]
+
+    subgraph D0[" "]
+        direction LR
+        User([Young adult]) -.- Client[Client App]
+        ContentAdmin([Content admin]) -.- Admin[Admin Content Tool]
+        Client -->|I1| Auth[Auth Service]
+        Client -->|I2| Backend[Backend API]
+        Admin -->|I6| Backend
+        Backend -->|I3| Auth
+        Backend -->|I4| DB[(Database)]
+        Backend -->|I5| AI[AI Coaching Service]
+    end
+
+    subgraph Legend
+        direction LR
+        A[Component we build] ~~~ B[External system] ~~~ C([Person])
+        D[ ] -->|"Ix = interface (see table)"| E[ ]
+        F[ ] -.-|uses app| G[ ]
+    end
+
+    Info ~~~ D0 ~~~ Legend
+
+    classDef external stroke-dasharray: 5 5
+    class Auth,AI,B external
