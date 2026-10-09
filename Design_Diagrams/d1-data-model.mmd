@@ -1,0 +1,53 @@
+---
+title: Financial Literacy App for Young Adults - D1 Data Model (Database)
+---
+erDiagram
+    USER ||--o{ TRANSACTION : records
+    CATEGORY ||--o{ TRANSACTION : classifies
+    USER ||--o{ COACHING_SESSION : starts
+    COACHING_SESSION ||--|{ COACHING_MESSAGE : contains
+    ARTICLE ||--o{ ARTICLE_IMAGE : includes
+
+    USER {
+        UUID user_id PK
+        string auth_subject "unique; ID from Auth Service (I3)"
+        string role "user or admin"
+        timestamp created_at "ISO 8601"
+    }
+    CATEGORY {
+        UUID category_id PK
+        string name "unique; fixed list"
+    }
+    TRANSACTION {
+        UUID transaction_id PK
+        UUID user_id FK
+        UUID category_id FK
+        decimal amount "USD, 2 decimal places"
+        string type "income or expense"
+        date occurred_on "ISO 8601"
+    }
+    COACHING_SESSION {
+        UUID session_id PK
+        UUID user_id FK
+        timestamp started_at "ISO 8601"
+    }
+    COACHING_MESSAGE {
+        UUID message_id PK
+        UUID session_id FK
+        string role "user or assistant"
+        string content
+        string status "answered, needs_info, out_of_scope, unavailable"
+        timestamp created_at "ISO 8601"
+    }
+    ARTICLE {
+        UUID article_id PK
+        string topic "budgeting, saving, debt, credit, general"
+        string status "draft or published"
+        int version "checked on update (I6 409)"
+        timestamp published_at "ISO 8601"
+    }
+    ARTICLE_IMAGE {
+        UUID image_id PK
+        UUID article_id FK
+        string alt_text "required (US-05)"
+    }
