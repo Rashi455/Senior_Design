@@ -1,0 +1,20 @@
+---
+title: Financial Literacy App for Young Adults - D2 Client App, Coaching Chat
+---
+stateDiagram-v2
+    direction LR
+    state "Goal - help young adults budget, save and manage debt with simple tracking and AI coaching (no investment advice). Input - a money question. Output - an accessible coaching reply or a clear message (US-02, UC-01)." as Info
+
+    [*] --> Idle
+    Idle --> Sending: send 1-2,000 chars / POST /coach/messages (I2)
+    Sending --> Answered: answered (AC-01.1)
+    Sending --> NeedsInfo: needs_info / list follow-ups (UC-01 A1)
+    Sending --> OutOfScope: out_of_scope / redirect to budget topics
+    Sending --> Unavailable: unavailable, over 50 s or offline (AC-01.2)
+    Sending --> Idle: 400 / show message
+    Answered --> Idle: read out (US-05)
+    NeedsInfo --> Idle: user replies
+    OutOfScope --> Idle
+    Unavailable --> Idle: question kept
+
+    state "Legend - rounded box = state; arrow = transition labelled 'event / action'; filled circle = start. Unavailable shows no AI text (UC-01 E1); out_of_scope redirects to budgeting, saving, debt or credit." as Legend

@@ -1,0 +1,22 @@
+---
+title: Financial Literacy App for Young Adults - D2 Client App, Transaction Entry and Offline Queue
+---
+stateDiagram-v2
+    direction LR
+    state "Goal - help young adults budget, save and manage debt with simple tracking and AI coaching. Input - a transaction typed by the user. Output - a saved transaction (I2) or one queued on the device." as Info
+
+    [*] --> Editing
+    Editing --> Validating: Save pressed
+    Validating --> Editing: check fails / show field messages (US-05)
+    Validating --> Submitting: checks pass / POST /transactions with Idempotency-Key
+    Submitting --> Saved: 201, or 200 already saved
+    Submitting --> Editing: 400 or 404 / show field messages
+    Submitting --> Queued: offline, timeout or 503 / store in pendingTransactions
+    Queued --> Syncing: back online, app start, or every 60 s
+    Syncing --> Saved: 201 or 200 / remove from queue
+    Syncing --> Queued: offline or 503 / attempts + 1
+    Syncing --> NeedsFix: 400 or 404 / notice tx-needs-fix
+    NeedsFix --> Editing: user opens the entry
+    Saved --> [*]
+
+    state "Legend - rounded box = state; arrow = transition labelled 'event / action'; filled circle = start; ringed circle = end. 401 at any step triggers one token refresh and retry (Auth state machine)." as Legend

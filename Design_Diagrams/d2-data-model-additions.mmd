@@ -1,0 +1,37 @@
+---
+title: Financial Literacy App for Young Adults - D2 Data Model Additions (Database)
+---
+erDiagram
+    USER ||--o{ TRANSACTION : records
+    USER |o--o{ CATEGORY : "creates (none = built-in)"
+    CATEGORY ||--o{ TRANSACTION : classifies
+    ARTICLE ||--o{ ARTICLE_IMAGE : includes
+
+    USER {
+        UUID user_id PK
+        string auth_subject "unique; ID from Auth Service (I3)"
+    }
+    CATEGORY {
+        UUID category_id PK
+        UUID user_id FK "null = built-in"
+        string name "D2: unique per user, ignoring case"
+    }
+    TRANSACTION {
+        UUID transaction_id PK
+        UUID user_id FK
+        UUID category_id FK
+        string note "D2: up to 200 characters (I2)"
+        UUID client_request_id "D2: unique per user; Idempotency-Key"
+    }
+    ARTICLE {
+        UUID article_id PK
+        string title "D2: 1 to 200 characters (I6)"
+        string body "D2: Markdown (I6)"
+        timestamp updated_at "D2: ISO 8601"
+    }
+    ARTICLE_IMAGE {
+        UUID image_id PK
+        UUID article_id FK
+        string src "D2: image URL from the body; unique per article"
+        string alt_text "required (US-05)"
+    }

@@ -1,0 +1,18 @@
+---
+title: Financial Literacy App for Young Adults - D2 Authentication, Client Session
+---
+stateDiagram-v2
+    direction LR
+    state "Goal - help young adults budget, save and manage debt with simple tracking and AI coaching. Input - email and password (I1). Output - an access token held in memory for I2 calls." as Info
+
+    [*] --> SignedOut
+    SignedOut --> SigningIn: submit email and password (I1)
+    SigningIn --> SignedIn: tokens returned / keep in memory
+    SigningIn --> SignedOut: 401 / "email or password incorrect"
+    SigningIn --> SignedOut: 429 / show when to retry
+    SignedIn --> Refreshing: API returns 401, or token within 60 s of expiry
+    Refreshing --> SignedIn: new token / retry failed call once
+    Refreshing --> SignedOut: refresh fails / notice session-ended, keep queue
+    SignedIn --> SignedOut: user signs out / warn if queue not empty, clear queue, cache and chat
+
+    state "Legend - rounded box = state; arrow = transition labelled 'event / action'; filled circle = start." as Legend

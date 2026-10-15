@@ -1,0 +1,14 @@
+---
+title: Financial Literacy App for Young Adults - D2 Admin Content Tool, Article Lifecycle
+---
+stateDiagram-v2
+    direction LR
+    state "Goal - help young adults budget, save and manage debt with simple tracking and AI coaching. Input - an admin's article edits (I6). Output - a versioned article; only published ones reach GET /content (US-04)." as Info
+
+    [*] --> Draft: first save, status draft, articleId null / version 1
+    Draft --> Draft: save / version + 1
+    Draft --> Published: save with status published / set publishedAt first time
+    Published --> Published: save edits / version + 1, updatedAt changes
+    Published --> Draft: save with status draft (unpublish) / leaves GET /content
+
+    state "Legend - rounded box = state; arrow = transition labelled 'event / action'; filled circle = start. Any save can fail with 400 (missing field or alt text, US-05), 403 (not admin) or 409 (newer version saved), and the article stays in its current state. There is no delete." as Legend
